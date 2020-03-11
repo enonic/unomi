@@ -19,17 +19,59 @@ package org.apache.unomi.graphql.types.input;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
-@GraphQLName("CDP_EventOccurrenceFilter")
+import static org.apache.unomi.graphql.types.input.CDPEventOccurrenceFilterInput.TYPE_NAME;
+
+@GraphQLName(TYPE_NAME)
 public class CDPEventOccurrenceFilterInput {
 
+    public static final String TYPE_NAME = "CDP_EventOccurrenceFilterInput";
+
     @GraphQLField
-    public String eventId;
+    private String eventId;
+
     @GraphQLField
-    public String beforeTime;
+    private String beforeTime;
+
     @GraphQLField
-    public String afterTime;
+    private String afterTime;
+
     @GraphQLField
-    public String betweenTime;
+    private String betweenTime;
+
     @GraphQLField
-    public int count;
+    private int count;
+
+    public CDPEventOccurrenceFilterInput(
+            final @GraphQLName("eventId") String eventId,
+            final @GraphQLName("beforeTime") String beforeTime,
+            final @GraphQLName("afterTime") String afterTime,
+            final @GraphQLName("betweenTime") String betweenTime,
+            final @GraphQLName("count") int count) {
+        this.eventId = eventId;
+        this.beforeTime = beforeTime;
+        this.afterTime = afterTime;
+        this.betweenTime = betweenTime;
+        this.count = count;
+    }
+
+    public String getEventId() {
+        return eventId;
+    }
+
+    public String getBeforeTime() {
+        return beforeTime;
+    }
+
+    public String getAfterTime() {
+        return afterTime;
+    }
+
+    public String getBetweenTime() {
+        return betweenTime;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
 }

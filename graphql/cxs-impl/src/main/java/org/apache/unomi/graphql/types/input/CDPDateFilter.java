@@ -19,8 +19,13 @@ package org.apache.unomi.graphql.types.input;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
-@GraphQLName("CDP_DateFilter")
+import static org.apache.unomi.graphql.types.input.CDPDateFilter.TYPE_NAME;
+
+@GraphQLName(TYPE_NAME)
 public class CDPDateFilter {
+
+    public static final String TYPE_NAME = "CDP_DateFilterInput";
+
     @GraphQLField
     public long after;
     @GraphQLField

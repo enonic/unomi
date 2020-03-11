@@ -21,6 +21,10 @@ import graphql.Scalars;
 import graphql.annotations.AnnotationsSchemaCreator;
 import graphql.annotations.processor.GraphQLAnnotations;
 import graphql.annotations.processor.ProcessingElementsContainer;
+import graphql.annotations.processor.graphQLProcessors.GraphQLInputProcessor;
+import graphql.annotations.processor.graphQLProcessors.GraphQLOutputProcessor;
+import graphql.annotations.processor.typeFunctions.DefaultTypeFunction;
+import graphql.annotations.processor.typeFunctions.TypeFunction;
 import graphql.language.InputObjectTypeDefinition;
 import graphql.schema.FieldCoordinates;
 import graphql.schema.GraphQLCodeRegistry;
@@ -95,6 +99,10 @@ public class GraphQLSchemaUpdater {
 
     private GraphQLAnnotations graphQLAnnotations;
 
+    private GraphQLInputProcessor graphQLInputProcessor;
+
+    private GraphQLOutputProcessor graphQLOutputProcessor;
+
     @Activate
     public void activate() {
         this.isActivated = true;
@@ -111,6 +119,25 @@ public class GraphQLSchemaUpdater {
             executorService.shutdown();
         }
     }
+
+    @Reference(policy = ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY)
+    public void setGraphQLInputProcessor(GraphQLInputProcessor graphQLInputProcessor) {
+        this.graphQLInputProcessor = graphQLInputProcessor;
+    }
+
+    public void unsetGraphQLInputProcessor(GraphQLInputProcessor graphQLInputProcessor) {
+        this.graphQLInputProcessor = null;
+    }
+
+    @Reference(policy = ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY)
+    public void setGraphQLOutputProcessor(GraphQLOutputProcessor graphQLOutputProcessor) {
+        this.graphQLOutputProcessor = graphQLOutputProcessor;
+    }
+
+    public void unsetGraphQLOutputProcessor(GraphQLOutputProcessor graphQLOutputProcessor) {
+        this.graphQLOutputProcessor = null;
+    }
+
 
     @Reference
     public void setProfileService(ProfileService profileService) {
@@ -246,7 +273,7 @@ public class GraphQLSchemaUpdater {
         setUpTypes(schemaBuilder);
         setUpExtensions();
         setUpCodeRegister();
-        setUpDynamicFields();
+//        setUpDynamicFields();
 
         createEventInputTypes();
 
@@ -261,6 +288,8 @@ public class GraphQLSchemaUpdater {
             }
         });
 
+        graphQLAnnotations.registerTypeFunction(new DefaultTypeFunction(graphQLInputProcessor, graphQLOutputProcessor));
+
         return schemaBuilder
                 .query(RootQuery.class)
                 .mutation(RootMutation.class)
@@ -268,7 +297,7 @@ public class GraphQLSchemaUpdater {
                 .build();
     }
 
-    private void registerDynamicFields(
+    private void registerDynamicOutputFields(
             final GraphQLAnnotations graphQLAnnotations, final String target, final String graphQLTypeName, final Class<?> clazz) {
         final Collection<PropertyType> propertyTypes = profileService.getTargetPropertyTypes(target);
 
@@ -289,6 +318,26 @@ public class GraphQLSchemaUpdater {
         }).collect(Collectors.toList());
 
         final GraphQLObjectType transformedObjectType = graphQLAnnotations.object(clazz)
+                .transform(builder -> fieldDefinitions.forEach(builder::field));
+
+        graphQLAnnotations.getContainer().getTypeRegistry().put(graphQLTypeName, transformedObjectType);
+    }
+
+    private void registerDynamicInputFields(
+            final GraphQLAnnotations graphQLAnnotations, final String target, final String graphQLTypeName, final Class<?> clazz) {
+        final Collection<PropertyType> propertyTypes = profileService.getTargetPropertyTypes(target);
+
+        final List<GraphQLInputObjectField> fieldDefinitions = propertyTypes.stream().filter(propertyType -> propertyType != null && propertyType.getItemId().matches("[_A-Za-z][_0-9A-Za-z]*")).map(propertyType -> {
+
+            final GraphQLInputObjectField.Builder fieldBuilder = GraphQLInputObjectField.newInputObjectField();
+
+            fieldBuilder.type((GraphQLInputType) convert(propertyType.getValueTypeId()));
+            fieldBuilder.name(propertyType.getItemId());
+
+            return fieldBuilder.build();
+        }).collect(Collectors.toList());
+
+        final GraphQLInputObjectType transformedObjectType = getInputObjectType(clazz)
                 .transform(builder -> fieldDefinitions.forEach(builder::field));
 
         graphQLAnnotations.getContainer().getTypeRegistry().put(graphQLTypeName, transformedObjectType);
@@ -324,8 +373,8 @@ public class GraphQLSchemaUpdater {
     }
 
     private void setUpDynamicFields() {
-        registerDynamicFields(graphQLAnnotations, "profiles", CDPProfile.TYPE_NAME, CDPProfile.class);
-        registerDynamicFields(graphQLAnnotations, "profiles", CDPProfilePropertiesFilterInput.TYPE_NAME, CDPProfilePropertiesFilterInput.class);
+        registerDynamicOutputFields(graphQLAnnotations, "profiles", CDPProfile.TYPE_NAME, CDPProfile.class);
+        registerDynamicInputFields(graphQLAnnotations, "profiles", CDPProfilePropertiesFilterInput.TYPE_NAME, CDPProfilePropertiesFilterInput.class);
     }
 
     private void setUpQueries(final Map<String, GraphQLType> typeRegistry) {
@@ -360,7 +409,7 @@ public class GraphQLSchemaUpdater {
         final ProcessingElementsContainer container = graphQLAnnotations.getContainer();
 
         container.setInputPrefix("");
-        container.setInputSuffix("Input");
+        container.setInputSuffix("");
     }
 
     private GraphQLType convert(final String type) {

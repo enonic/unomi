@@ -20,11 +20,24 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 import graphql.annotations.annotationTypes.GraphQLNonNull;
 
-@GraphQLName("CDP_Optimization")
+import static org.apache.unomi.graphql.types.input.CDPOptimizationInput.TYPE_NAME;
+
+@GraphQLName(TYPE_NAME)
 public class CDPOptimizationInput {
+
+    public static final String TYPE_NAME = "CDP_OptimizationInput";
 
     @GraphQLField
     @GraphQLNonNull
-    public String name;
+    private String name;
+
+    public CDPOptimizationInput(
+            final @GraphQLName("name") @GraphQLNonNull String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 
 }

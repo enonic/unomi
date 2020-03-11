@@ -40,10 +40,11 @@ public class ProfileAllEventsConnectionDataFetcher extends EventConnectionDataFe
         final ServiceManager serviceManager = environment.getContext();
 
         // force searching events belonging to current profile only
-        if (filterInput == null) {
-            filterInput = new CDPEventFilterInput();
-        }
-        filterInput.cdp_profileID_equals = cdpProfile.getProfile().getItemId();
+//        TODO to figure out how to set profile id
+//        if (filterInput == null) {
+//            filterInput = new CDPEventFilterInput();
+//        }
+//        filterInput.cdp_profileID_equals = cdpProfile.getProfile().getItemId();
 
         final Condition condition = createEventFilterInputCondition(filterInput, params.getAfter(), params.getBefore(), serviceManager.getDefinitionsService());
         final PartialList<Event> events = serviceManager.getEventService().searchEvents(condition, params.getFirst(), params.getSize());

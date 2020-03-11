@@ -21,31 +21,74 @@ import graphql.annotations.annotationTypes.GraphQLName;
 
 import java.util.List;
 
-@GraphQLName("CDP_SegmentFilter")
+import static org.apache.unomi.graphql.types.input.CDPSegmentFilterInput.TYPE_NAME;
+
+@GraphQLName(TYPE_NAME)
 public class CDPSegmentFilterInput {
+
+    public static final String TYPE_NAME = "CDP_SegmentFilterInput";
 
     @GraphQLField
     @GraphQLName("and")
-    public List<CDPSegmentFilterInput> andFilters;
+    private List<CDPSegmentFilterInput> andFilters;
 
     @GraphQLField
     @GraphQLName("or")
-    public List<CDPSegmentFilterInput> orFilters;
+    private List<CDPSegmentFilterInput> orFilters;
 
     @GraphQLField
     @GraphQLName("view_equals")
-    public String viewEquals;
+    private String viewEquals;
 
     @GraphQLField
     @GraphQLName("view_regexp")
-    public String viewRegexp;
+    private String viewRegexp;
 
     @GraphQLField
     @GraphQLName("name_equals")
-    public String nameEquals;
+    private String nameEquals;
 
     @GraphQLField
     @GraphQLName("name_regexp")
-    public String nameRegexp;
+    private String nameRegexp;
+
+    public CDPSegmentFilterInput(
+            final @GraphQLName("and") List<CDPSegmentFilterInput> andFilters,
+            final @GraphQLName("or") List<CDPSegmentFilterInput> orFilters,
+            final @GraphQLName("view_equals") String viewEquals,
+            final @GraphQLName("view_regexp") String viewRegexp,
+            final @GraphQLName("name_equals") String nameEquals,
+            final @GraphQLName("name_regexp") String nameRegexp) {
+        this.andFilters = andFilters;
+        this.orFilters = orFilters;
+        this.viewEquals = viewEquals;
+        this.viewRegexp = viewRegexp;
+        this.nameEquals = nameEquals;
+        this.nameRegexp = nameRegexp;
+    }
+
+    public List<CDPSegmentFilterInput> getAndFilters() {
+        return andFilters;
+    }
+
+    public List<CDPSegmentFilterInput> getOrFilters() {
+        return orFilters;
+    }
+
+    public String getViewEquals() {
+        return viewEquals;
+    }
+
+    public String getViewRegexp() {
+        return viewRegexp;
+    }
+
+    public String getNameEquals() {
+        return nameEquals;
+    }
+
+    public String getNameRegexp() {
+        return nameRegexp;
+    }
 
 }

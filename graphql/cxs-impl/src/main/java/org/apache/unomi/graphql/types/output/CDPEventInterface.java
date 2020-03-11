@@ -80,7 +80,6 @@ public abstract class CDPEventInterface {
     }
 
     @GraphQLField
-    @GraphQLNonNull
     @GraphQLPrettify
     public CDPProfileID getCdp_profileID() {
         return cdp_profileID;

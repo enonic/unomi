@@ -21,8 +21,12 @@ import graphql.annotations.annotationTypes.GraphQLID;
 import graphql.annotations.annotationTypes.GraphQLName;
 import graphql.annotations.annotationTypes.GraphQLNonNull;
 
-@GraphQLName("CDP_Segment")
+import static org.apache.unomi.graphql.types.input.CDPSegmentInput.TYPE_NAME;
+
+@GraphQLName(TYPE_NAME)
 public class CDPSegmentInput {
+
+    public static final String TYPE_NAME = "CDP_SegmentInput";
 
     @GraphQLID
     @GraphQLField

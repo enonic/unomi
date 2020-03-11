@@ -22,8 +22,12 @@ import graphql.annotations.annotationTypes.GraphQLName;
 import java.util.ArrayList;
 import java.util.List;
 
-@GraphQLName("CDP_ProfileFilter")
+import static org.apache.unomi.graphql.types.input.CDPProfileFilterInput.TYPE_NAME;
+
+@GraphQLName(TYPE_NAME)
 public class CDPProfileFilterInput {
+
+    public static final String TYPE_NAME = "CDP_ProfileFilterInput";
 
     @GraphQLField
     private List<String> profileIDs_contains = new ArrayList<>();
@@ -45,9 +49,6 @@ public class CDPProfileFilterInput {
 
     @GraphQLField
     private CDPProfileEventsFilterInput events;
-
-//    public CDPProfileFilterInput() {
-//    }
 
     public CDPProfileFilterInput(@GraphQLName("profileIDs_contains") List<String> profileIDs_contains,
                                  @GraphQLName("segments_contains") List<String> segments_contains,

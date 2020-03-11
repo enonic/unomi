@@ -21,8 +21,12 @@ import graphql.annotations.annotationTypes.GraphQLID;
 import graphql.annotations.annotationTypes.GraphQLName;
 import graphql.annotations.annotationTypes.GraphQLNonNull;
 
-@GraphQLName("CDP_ProfileID")
+import static org.apache.unomi.graphql.types.input.CDPProfileIDInput.TYPE_NAME;
+
+@GraphQLName(TYPE_NAME)
 public class CDPProfileIDInput {
+
+    public static final String TYPE_NAME = "CDP_ProfileIDInput";
 
     @GraphQLID
     @GraphQLField
@@ -32,9 +36,6 @@ public class CDPProfileIDInput {
     @GraphQLField
     @GraphQLNonNull
     private CDPClientInput client;
-
-//    public CDPProfileIDInput() {
-//    }
 
     public CDPProfileIDInput(
             final @GraphQLID @GraphQLNonNull @GraphQLName("id") String id,

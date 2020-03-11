@@ -23,8 +23,12 @@ import graphql.annotations.annotationTypes.GraphQLName;
 import java.util.ArrayList;
 import java.util.List;
 
-@GraphQLName("CDP_InterestFilterInput")
+import static org.apache.unomi.graphql.types.input.CDPInterestFilterInput.TYPE_NAME;
+
+@GraphQLName(TYPE_NAME)
 public class CDPInterestFilterInput {
+
+    public static final String TYPE_NAME = "CDP_InterestFilterInput";
 
     @GraphQLField
     private List<CDPInterestFilterInput> and = new ArrayList<>();
@@ -49,9 +53,6 @@ public class CDPInterestFilterInput {
 
     @GraphQLField
     private Float score_gte;
-
-//    public CDPInterestFilterInput() {
-//    }
 
     public CDPInterestFilterInput(@GraphQLName("and") List<CDPInterestFilterInput> and,
                                   @GraphQLName("or") List<CDPInterestFilterInput> or,

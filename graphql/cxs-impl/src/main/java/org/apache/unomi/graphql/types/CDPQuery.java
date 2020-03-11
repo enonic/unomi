@@ -20,7 +20,7 @@ import graphql.annotations.annotationTypes.GraphQLDataFetcher;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 import graphql.annotations.annotationTypes.GraphQLNonNull;
-import org.apache.unomi.graphql.fetchers.EventConnectionDataFetcher;
+import graphql.schema.DataFetchingEnvironment;
 import org.apache.unomi.graphql.fetchers.event.FindEventsConnectionDataFetcher;
 import org.apache.unomi.graphql.fetchers.profile.FindProfilesConnectionDataFetcher;
 import org.apache.unomi.graphql.fetchers.profile.ProfileDataFetcher;
@@ -44,12 +44,12 @@ public class CDPQuery {
     public static final String TYPE_NAME = "CDP_Query";
 
     @GraphQLField
-    @GraphQLDataFetcher(ProfileDataFetcher.class)
     public CDPProfile getProfile(
             final @GraphQLName("profileID") @GraphQLNonNull CDPProfileIDInput profileID,
-            final @GraphQLName("createIfMissing") Boolean createIfMissing) {
+            final @GraphQLName("createIfMissing") Boolean createIfMissing,
+            final DataFetchingEnvironment environment) throws Exception {
 
-        return null;
+        return ProfileDataFetcher.create(profileID, createIfMissing).build().get(environment);
     }
 
     @GraphQLField

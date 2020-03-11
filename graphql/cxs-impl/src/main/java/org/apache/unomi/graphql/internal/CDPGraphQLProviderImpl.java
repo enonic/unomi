@@ -19,9 +19,9 @@ package org.apache.unomi.graphql.internal;
 import graphql.annotations.processor.GraphQLAnnotationsComponent;
 import graphql.annotations.processor.ProcessingElementsContainer;
 import graphql.schema.*;
-import graphql.servlet.config.GraphQLMutationProvider;
-import graphql.servlet.config.GraphQLQueryProvider;
-import graphql.servlet.config.GraphQLTypesProvider;
+//import graphql.servlet.config.GraphQLMutationProvider;
+//import graphql.servlet.config.GraphQLQueryProvider;
+//import graphql.servlet.config.GraphQLTypesProvider;
 import org.apache.unomi.graphql.CDPGraphQLProvider;
 import org.apache.unomi.graphql.OldCDPMutation;
 import org.apache.unomi.graphql.CDPProviderManager;
@@ -46,7 +46,7 @@ import static graphql.schema.GraphQLArgument.newArgument;
 import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
 import static graphql.schema.GraphQLObjectType.newObject;
 
-public class CDPGraphQLProviderImpl implements CDPGraphQLProvider, GraphQLQueryProvider, GraphQLTypesProvider, GraphQLMutationProvider {
+public class CDPGraphQLProviderImpl implements CDPGraphQLProvider/*, GraphQLQueryProvider, GraphQLTypesProvider, GraphQLMutationProvider*/ {
 
     private static final Logger logger = LoggerFactory.getLogger(CDPGraphQLProviderImpl.class.getName());
 
@@ -110,7 +110,7 @@ public class CDPGraphQLProviderImpl implements CDPGraphQLProvider, GraphQLQueryP
         this.cdpProviderManager = cdpProviderManager;
     }
 
-    @Override
+//    @Override
     public Collection<GraphQLFieldDefinition> getQueries() {
         List<GraphQLFieldDefinition> fieldDefinitions = new ArrayList<GraphQLFieldDefinition>();
         final CDPGraphQLProvider cdpGraphQLProvider = this;
@@ -126,12 +126,12 @@ public class CDPGraphQLProviderImpl implements CDPGraphQLProvider, GraphQLQueryP
         return fieldDefinitions;
     }
 
-    @Override
+//    @Override
     public Collection<GraphQLType> getTypes() {
         return new ArrayList<>();
     }
 
-    @Override
+//    @Override
     public Collection<GraphQLFieldDefinition> getMutations() {
         List<GraphQLFieldDefinition> fieldDefinitions = new ArrayList<GraphQLFieldDefinition>();
         final CDPGraphQLProvider cdpGraphQLProvider = this;

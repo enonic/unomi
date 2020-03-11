@@ -20,11 +20,24 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 import graphql.annotations.annotationTypes.GraphQLNonNull;
 
-@GraphQLName("CDP_Recommendation")
+import static org.apache.unomi.graphql.types.input.CDPRecommendationInput.TYPE_NAME;
+
+@GraphQLName(TYPE_NAME)
 public class CDPRecommendationInput {
+
+    public static final String TYPE_NAME = "CDP_RecommendationInput";
 
     @GraphQLField
     @GraphQLNonNull
-    public String name;
+    private String name;
+
+    public CDPRecommendationInput(
+            final @GraphQLName("name") @GraphQLNonNull String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 
 }

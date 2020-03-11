@@ -19,10 +19,32 @@ package org.apache.unomi.graphql.types.input;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 
-@GraphQLName("CDP_GeoPoint")
+import static org.apache.unomi.graphql.types.input.CDPGeoPointInput.TYPE_NAME;
+
+@GraphQLName(TYPE_NAME)
 public class CDPGeoPointInput {
+
+    public static final String TYPE_NAME = "CDP_GeoPointInput";
+
     @GraphQLField
-    public Double longitude;
+    private Double longitude;
+
     @GraphQLField
-    public Double latitude;
+    private Double latitude;
+
+    public CDPGeoPointInput(
+            final @GraphQLName("longitude") Double longitude,
+            final @GraphQLName("latitude") Double latitude) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
 }

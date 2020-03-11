@@ -21,12 +21,41 @@ import graphql.annotations.annotationTypes.GraphQLName;
 import org.apache.unomi.graphql.types.output.CDPGeoDistanceUnit;
 import org.apache.unomi.graphql.types.output.CDPGeoPoint;
 
-@GraphQLName("CDP_GeoDistance")
+import static org.apache.unomi.graphql.types.input.CDPGeoDistanceInput.TYPE_NAME;
+
+@GraphQLName(TYPE_NAME)
 public class CDPGeoDistanceInput {
+
+    public static final String TYPE_NAME = "CDP_GeoDistanceInput";
+
     @GraphQLField
-    public CDPGeoPoint center;
+    private CDPGeoPoint center;
+
     @GraphQLField
-    public CDPGeoDistanceUnit unit;
+    private CDPGeoDistanceUnit unit;
+
     @GraphQLField
-    public Double distance;
+    private Double distance;
+
+    public CDPGeoDistanceInput(
+            final @GraphQLName("center") CDPGeoPoint center,
+            final @GraphQLName("unit") CDPGeoDistanceUnit unit,
+            final @GraphQLName("distance") Double distance) {
+        this.center = center;
+        this.unit = unit;
+        this.distance = distance;
+    }
+
+    public CDPGeoPoint getCenter() {
+        return center;
+    }
+
+    public CDPGeoDistanceUnit getUnit() {
+        return unit;
+    }
+
+    public Double getDistance() {
+        return distance;
+    }
+
 }

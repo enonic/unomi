@@ -21,8 +21,12 @@ import graphql.annotations.annotationTypes.GraphQLName;
 
 import java.util.List;
 
-@GraphQLName("CDP_EventFilter")
+import static org.apache.unomi.graphql.types.input.CDPEventFilter.TYPE_NAME;
+
+@GraphQLName(TYPE_NAME)
 public class CDPEventFilter {
+
+    public static final String TYPE_NAME = "CDP_EventFilterInput";
 
     @GraphQLField
     @GraphQLName("and")

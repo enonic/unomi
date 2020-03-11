@@ -23,8 +23,12 @@ import graphql.annotations.annotationTypes.GraphQLName;
 import java.util.ArrayList;
 import java.util.List;
 
-@GraphQLName("CDP_ProfileEventsFilterInput")
+import static org.apache.unomi.graphql.types.input.CDPProfileEventsFilterInput.TYPE_NAME;
+
+@GraphQLName(TYPE_NAME)
 public class CDPProfileEventsFilterInput {
+
+    public static final String TYPE_NAME = "CDP_ProfileEventsFilterInput";
 
     @GraphQLField
     private List<CDPProfileEventsFilterInput> and = new ArrayList<>();
@@ -43,9 +47,6 @@ public class CDPProfileEventsFilterInput {
 
     @GraphQLField
     private CDPEventFilterInput eventFilter;
-
-//    public CDPProfileEventsFilterInput() {
-//    }
 
     public CDPProfileEventsFilterInput(@GraphQLName("and") List<CDPProfileEventsFilterInput> and,
                                        @GraphQLName("or") List<CDPProfileEventsFilterInput> or,

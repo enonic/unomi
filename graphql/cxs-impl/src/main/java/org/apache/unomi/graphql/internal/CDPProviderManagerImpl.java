@@ -18,9 +18,9 @@ package org.apache.unomi.graphql.internal;
 
 import graphql.annotations.processor.GraphQLAnnotationsComponent;
 import graphql.annotations.processor.retrievers.GraphQLFieldRetriever;
-import graphql.servlet.config.GraphQLMutationProvider;
-import graphql.servlet.config.GraphQLQueryProvider;
-import graphql.servlet.config.GraphQLTypesProvider;
+//import graphql.servlet.config.GraphQLMutationProvider;
+//import graphql.servlet.config.GraphQLQueryProvider;
+//import graphql.servlet.config.GraphQLTypesProvider;
 import org.apache.unomi.api.services.SegmentService;
 import org.apache.unomi.graphql.CDPGraphQLProvider;
 import org.apache.unomi.graphql.CDPProviderManager;
@@ -79,11 +79,11 @@ public class CDPProviderManagerImpl implements CDPProviderManager {
         this.bundleContext = bundleContext;
         this.cdpGraphQLProvider = new CDPGraphQLProviderImpl(annotationsComponent);
         this.cdpGraphQLProvider.setCdpProviderManager(this);
-        providerSR = bundleContext.registerService(new String[] {
-                GraphQLQueryProvider.class.getName(),
-                GraphQLTypesProvider.class.getName(),
-                GraphQLMutationProvider.class.getName()
-        }, cdpGraphQLProvider, null);
+//        providerSR = bundleContext.registerService(new String[] {
+//                GraphQLQueryProvider.class.getName(),
+//                GraphQLTypesProvider.class.getName(),
+//                GraphQLMutationProvider.class.getName()
+//        }, cdpGraphQLProvider, null);
     }
 
     @Deactivate
@@ -100,11 +100,11 @@ public class CDPProviderManagerImpl implements CDPProviderManager {
         if (providerSR != null) {
             providerSR.unregister();
             providerSR = null;
-            providerSR = bundleContext.registerService(new String[] {
-                    GraphQLQueryProvider.class.getName(),
-                    GraphQLTypesProvider.class.getName(),
-                    GraphQLMutationProvider.class.getName()
-            }, cdpGraphQLProvider, null);
+//            providerSR = bundleContext.registerService(new String[] {
+//                    GraphQLQueryProvider.class.getName(),
+//                    GraphQLTypesProvider.class.getName(),
+//                    GraphQLMutationProvider.class.getName()
+//            }, cdpGraphQLProvider, null);
         }
     }
 

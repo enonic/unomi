@@ -22,41 +22,49 @@ import graphql.annotations.annotationTypes.GraphQLName;
 import java.util.ArrayList;
 import java.util.List;
 
-@GraphQLName("CDP_EventType")
+import static org.apache.unomi.graphql.types.input.CDPEventTypeInput.TYPE_NAME;
+
+@GraphQLName(TYPE_NAME)
 public class CDPEventTypeInput {
 
+    public static final String TYPE_NAME = "CDP_EventTypeInput";
+
+    @GraphQLField
     private String id;
+
+    @GraphQLField
     private String scope;
+
+    @GraphQLField
     private String typeName;
+
+    @GraphQLField
     private List<CDPPropertyInput> properties = new ArrayList<>();
 
-    public CDPEventTypeInput(@GraphQLName("id") String id,
-                             @GraphQLName("scope") String scope,
-                             @GraphQLName("typeName") String typeName,
-                             @GraphQLName("properties") List<CDPPropertyInput> properties) {
+    public CDPEventTypeInput(final @GraphQLName("id") String id,
+                             final @GraphQLName("scope") String scope,
+                             final @GraphQLName("typeName") String typeName,
+                             final @GraphQLName("properties") List<CDPPropertyInput> properties) {
         this.id = id;
         this.scope = scope;
         this.typeName = typeName;
         this.properties = properties;
     }
 
-    @GraphQLField
     public String getId() {
         return id;
     }
 
-    @GraphQLField
     public String getScope() {
         return scope;
     }
 
-    @GraphQLField
     public String getTypeName() {
         return typeName;
     }
 
-    @GraphQLField
     public List<CDPPropertyInput> getProperties() {
         return properties;
     }
+
 }

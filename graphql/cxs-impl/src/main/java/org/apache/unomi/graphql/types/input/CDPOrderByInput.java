@@ -21,16 +21,32 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 import org.apache.unomi.graphql.types.output.CDPSortOrder;
 
-@GraphQLName("CDP_OrderBy")
+import static org.apache.unomi.graphql.types.input.CDPOrderByInput.TYPE_NAME;
+
+@GraphQLName(TYPE_NAME)
 public class CDPOrderByInput {
 
-    @GraphQLField
-    public String fieldName;
+    public static final String TYPE_NAME = "CDP_OrderByInput";
 
     @GraphQLField
-    public CDPSortOrder sortOrder;
+    private String fieldName;
 
-    public CDPOrderByInput() {
+    @GraphQLField
+    private CDPSortOrder sortOrder;
+
+    public CDPOrderByInput(
+            final @GraphQLName("fieldName") String fieldName,
+            final @GraphQLName("sortOrder") CDPSortOrder sortOrder) {
+        this.fieldName = fieldName;
+        this.sortOrder = sortOrder;
+    }
+
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public CDPSortOrder getSortOrder() {
+        return sortOrder;
     }
 
     public String asString() {

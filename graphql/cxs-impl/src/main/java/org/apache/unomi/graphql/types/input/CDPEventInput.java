@@ -21,7 +21,9 @@ import graphql.annotations.annotationTypes.GraphQLID;
 import graphql.annotations.annotationTypes.GraphQLName;
 import graphql.annotations.annotationTypes.GraphQLNonNull;
 
-@GraphQLName("CDP_Event")
+import static org.apache.unomi.graphql.types.input.CDPEventInput.TYPE_NAME;
+
+@GraphQLName(TYPE_NAME)
 public class CDPEventInput {
 
     public static final String TYPE_NAME = "CDP_EventInput";

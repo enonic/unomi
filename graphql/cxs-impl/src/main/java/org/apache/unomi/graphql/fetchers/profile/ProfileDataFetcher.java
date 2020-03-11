@@ -25,14 +25,22 @@ import org.apache.unomi.graphql.services.ServiceManager;
 import org.apache.unomi.graphql.types.input.CDPProfileIDInput;
 import org.apache.unomi.graphql.types.output.CDPProfile;
 
+import java.util.Objects;
+
 public class ProfileDataFetcher extends BaseDataFetcher<CDPProfile> {
+
+    private final CDPProfileIDInput profileIDInput;
+    private final Boolean createIfMissing;
+
+    private ProfileDataFetcher(final Builder buidlder) {
+        this.profileIDInput = buidlder.profileIDInput;
+        this.createIfMissing = buidlder.createIfMissing;
+    }
 
     @Override
     public CDPProfile get(DataFetchingEnvironment environment) throws Exception {
-        final boolean createIfMissing = parseParam("createIfMissing", false, environment);
-        final CDPProfileIDInput profileIDInput = parseObjectParam("profileID", CDPProfileIDInput.class, environment);
-
         final ServiceManager serviceManager = environment.getContext();
+
         final ProfileService profileService = serviceManager.getProfileService();
 
         Profile profile = profileService.load(profileIDInput.getId());
@@ -47,9 +55,38 @@ public class ProfileDataFetcher extends BaseDataFetcher<CDPProfile> {
             profile.setItemType("profile");
 
             profile = profileService.save(profile);
+
             return new CDPProfile(profile);
         }
 
         return null;
     }
+
+    public static Builder create(final CDPProfileIDInput profileIDInput, final Boolean createIfMissing) {
+        return new Builder(profileIDInput, createIfMissing);
+    }
+
+    public static class Builder {
+
+        private final CDPProfileIDInput profileIDInput;
+
+        private final Boolean createIfMissing;
+
+        public Builder(CDPProfileIDInput profileIDInput, Boolean createIfMissing) {
+            this.profileIDInput = profileIDInput;
+            this.createIfMissing = createIfMissing != null ? createIfMissing : false;
+        }
+
+        private void validate() {
+            Objects.requireNonNull(profileIDInput, "The \"ProfileID\" can not be null");
+        }
+
+        public ProfileDataFetcher build() {
+            validate();
+
+            return new ProfileDataFetcher(this);
+        }
+
+    }
+
 }

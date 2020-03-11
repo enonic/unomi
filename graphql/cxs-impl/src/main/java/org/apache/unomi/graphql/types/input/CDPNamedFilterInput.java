@@ -20,14 +20,33 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 import graphql.annotations.annotationTypes.GraphQLNonNull;
 
-@GraphQLName("CDP_NamedFilter")
+import static org.apache.unomi.graphql.types.input.CDPNamedFilterInput.TYPE_NAME;
+
+@GraphQLName(TYPE_NAME)
 public class CDPNamedFilterInput {
+
+    public static final String TYPE_NAME = "CDP_NamedFilterInput";
 
     @GraphQLField
     @GraphQLNonNull
-    public String name;
+    private String name;
 
     @GraphQLField
-    public CDPProfileFilterInput filter;
+    private CDPProfileFilterInput filter;
+
+    public CDPNamedFilterInput(
+            final @GraphQLName("name") @GraphQLNonNull String name,
+            final @GraphQLName("filter") CDPProfileFilterInput filter) {
+        this.name = name;
+        this.filter = filter;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public CDPProfileFilterInput getFilter() {
+        return filter;
+    }
 
 }

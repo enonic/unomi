@@ -999,6 +999,7 @@
         <module>samples</module>
         <module>package</module>
         <module>manual</module>
+        <module>unomi-sdl-graphql</module>
     </modules>
 
     <dependencies>

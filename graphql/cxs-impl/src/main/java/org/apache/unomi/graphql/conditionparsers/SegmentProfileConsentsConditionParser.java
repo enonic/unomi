@@ -14,30 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.unomi.graphql.fetchers.segments;
+package org.apache.unomi.graphql.conditionparsers;
 
-import graphql.schema.DataFetchingEnvironment;
-import org.apache.unomi.api.conditions.Condition;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class SegmentProfileConsentsDataFetcher extends BaseSegmentContainsDataFetcher<List<String>> {
+public class SegmentProfileConsentsConditionParser {
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<String> get(DataFetchingEnvironment environment) throws Exception {
-        return getSubConditions(environment).stream()
-                .filter(condition -> "booleanCondition".equals(condition.getConditionTypeId())
-                        && "or".equals(condition.getParameter("operator"))
-                        && Objects.nonNull(condition.getParameter("subConditions")))
-                .flatMap(condition -> ((ArrayList<Condition>) condition.getParameter("subConditions")).stream())
-                .filter(condition -> "booleanCondition".equals(condition.getConditionTypeId())
-                        && "and".equals(condition.getParameter("operator"))
-                        && Objects.nonNull(condition.getParameter("subConditions")))
-                .flatMap(condition -> ((ArrayList<Condition>) condition.getParameter("subConditions")).stream())
+    private final List<ConditionDecorator> conditions;
+
+    public SegmentProfileConsentsConditionParser(List<ConditionDecorator> conditions) {
+        this.conditions = conditions;
+    }
+
+    public List<String> parse() {
+        return conditions.stream()
+                .map(ConditionDecorator::getCondition)
                 .filter(condition -> "profilePropertyCondition".equals(condition.getConditionTypeId())
                         && condition.getParameter("propertyName").toString().startsWith("consents.")
                         && condition.getParameter("propertyName").toString().endsWith(".status")
@@ -48,8 +41,7 @@ public class SegmentProfileConsentsDataFetcher extends BaseSegmentContainsDataFe
                         condition.getParameter("propertyName").toString()
                                 .replaceAll("consents.", "")
                                 .replaceAll(".status", "")
-                )
-                .collect(Collectors.toList());
+                ).collect(Collectors.toList());
     }
 
 }

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.unomi.graphql.fetchers.segments;
+package org.apache.unomi.graphql.fetchers.segment;
 
 import graphql.schema.DataFetchingEnvironment;
 
@@ -22,14 +22,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SegmentProfileSegmentsDataFetcher extends BaseSegmentContainsDataFetcher<List<String>> {
+public class SegmentProfileListDataFetcher extends BaseSegmentContainsDataFetcher {
 
     @Override
     @SuppressWarnings("unchecked")
     public List<String> get(DataFetchingEnvironment environment) throws Exception {
         return getSubConditions(environment).stream()
-                .filter(condition -> "profileSegmentCondition".equals(condition.getConditionTypeId()))
-                .flatMap(condition -> ((ArrayList<String>) condition.getParameter("segments")).stream())
+                .filter(condition -> "profileUserListCondition".equals(condition.getConditionTypeId()))
+                .flatMap(condition -> ((ArrayList<String>) condition.getParameter("lists")).stream())
                 .collect(Collectors.toList());
     }
 

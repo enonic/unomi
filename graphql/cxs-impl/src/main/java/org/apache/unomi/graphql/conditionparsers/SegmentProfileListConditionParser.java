@@ -14,20 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.unomi.graphql.fetchers.segments;
-
-import graphql.schema.DataFetchingEnvironment;
+package org.apache.unomi.graphql.conditionparsers;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SegmentProfileListDataFetcher extends BaseSegmentContainsDataFetcher<List<String>> {
+public class SegmentProfileListConditionParser {
 
-    @Override
+    private final List<ConditionDecorator> conditions;
+
+    public SegmentProfileListConditionParser(List<ConditionDecorator> conditions) {
+        this.conditions = conditions;
+    }
+
     @SuppressWarnings("unchecked")
-    public List<String> get(DataFetchingEnvironment environment) throws Exception {
-        return getSubConditions(environment).stream()
+    public List<String> parse() {
+        return conditions.stream()
+                .map(ConditionDecorator::getCondition)
                 .filter(condition -> "profileUserListCondition".equals(condition.getConditionTypeId()))
                 .flatMap(condition -> ((ArrayList<String>) condition.getParameter("lists")).stream())
                 .collect(Collectors.toList());

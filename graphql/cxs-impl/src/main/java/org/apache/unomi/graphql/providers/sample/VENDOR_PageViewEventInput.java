@@ -41,4 +41,9 @@ public class VENDOR_PageViewEventInput implements CDPEventProcessor {
         return new Event();
     }
 
+    @Override
+    public String getFieldName() {
+        return EVENT_NAME;
+    }
+
 }

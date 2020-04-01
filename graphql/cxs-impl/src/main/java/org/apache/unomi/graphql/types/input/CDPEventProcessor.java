@@ -25,4 +25,6 @@ public interface CDPEventProcessor {
 
     Event buildEvent(final LinkedHashMap<String, Object> eventInputAsMap, final DataFetchingEnvironment environment);
 
+    String getFieldName();
+
 }

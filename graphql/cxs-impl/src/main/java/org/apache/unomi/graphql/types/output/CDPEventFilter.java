@@ -20,11 +20,9 @@ import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 import graphql.schema.DataFetchingEnvironment;
 import org.apache.unomi.api.conditions.Condition;
-import org.apache.unomi.graphql.utils.DateUtils;
 
 import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @GraphQLName("CDP_EventFilter")
 public class CDPEventFilter {
@@ -49,9 +47,7 @@ public class CDPEventFilter {
 
     @GraphQLField
     public String id_equals(final DataFetchingEnvironment environment) {
-        final Condition condition = getCondition("itemId", "equals");
-
-        return getValueOrNull(condition);
+        return null;
     }
 
     @GraphQLField
@@ -61,51 +57,37 @@ public class CDPEventFilter {
 
     @GraphQLField
     public String cdp_sourceID_equals(final DataFetchingEnvironment environment) {
-        final Condition condition = getCondition("source.itemId", "equals");
-
-        return getValueOrNull(condition);
+        return null;
     }
 
     @GraphQLField
     public String cdp_profileID_equals(final DataFetchingEnvironment environment) {
-        final Condition condition = getCondition("profileId", "equals");
-
-        return getValueOrNull(condition);
+        return null;
     }
 
     @GraphQLField
     public OffsetDateTime cdp_timestamp_equals(final DataFetchingEnvironment environment) {
-        final Condition condition = getCondition("timeStamp", "equals");
-
-        return DateUtils.offsetDateTimeFromMap(getValueOrNull(condition, "propertyValueDate"));
+        return null;
     }
 
     @GraphQLField
     public OffsetDateTime cdp_timestamp_lt(final DataFetchingEnvironment environment) {
-        final Condition condition = getCondition("timeStamp", "lessThan");
-
-        return DateUtils.offsetDateTimeFromMap(getValueOrNull(condition, "propertyValueDate"));
+        return null;
     }
 
     @GraphQLField
     public OffsetDateTime cdp_timestamp_lte(final DataFetchingEnvironment environment) {
-        final Condition condition = getCondition("timeStamp", "lessThanOrEqualTo");
-
-        return DateUtils.offsetDateTimeFromMap(getValueOrNull(condition, "propertyValueDate"));
+        return null;
     }
 
     @GraphQLField
     public OffsetDateTime cdp_timestamp_gt(final DataFetchingEnvironment environment) {
-        final Condition condition = getCondition("timeStamp", "greaterThan");
-
-        return DateUtils.offsetDateTimeFromMap(getValueOrNull(condition, "propertyValueDate"));
+        return null;
     }
 
     @GraphQLField
     public OffsetDateTime cdp_timestamp_gte(final DataFetchingEnvironment environment) {
-        final Condition condition = getCondition("timeStamp", "greaterThanOrEqualTo");
-
-        return DateUtils.offsetDateTimeFromMap(getValueOrNull(condition, "propertyValueDate"));
+        return null;
     }
 
     @GraphQLField
@@ -116,40 +98,6 @@ public class CDPEventFilter {
     @GraphQLField
     public CDPSessionEventFilter cdp_sessionEvent(final DataFetchingEnvironment environment) {
         return new CDPSessionEventFilter();
-    }
-
-    private <T> T getValueOrNull(final Condition condition) {
-        return getValueOrNull(condition, "propertyValue");
-    }
-
-    @SuppressWarnings("unchecked")
-    private <T> T getValueOrNull(final Condition condition, final String propertyValueParam) {
-        if (condition == null) {
-            return null;
-        }
-
-        if (condition.getParameter(propertyValueParam) != null) {
-            return (T) condition.getParameter(propertyValueParam);
-        }
-
-        return null;
-    }
-
-    @SuppressWarnings("unchecked")
-    private Condition getCondition(final String propertyName, final String comparisonOperator) {
-        final List<Condition> subConditions = (List<Condition>) eventCondition.getParameter("subConditions");
-
-        if (subConditions == null || subConditions.isEmpty()) {
-            return null;
-        }
-
-        return subConditions.stream()
-                .filter(condition -> "eventPropertyCondition".equals(condition.getConditionTypeId())
-                        && Objects.nonNull(condition.getParameter("propertyName"))
-                        && Objects.equals(condition.getParameter("propertyName").toString(), propertyName)
-                        && Objects.nonNull(condition.getParameter("comparisonOperator"))
-                        && Objects.equals(condition.getParameter("comparisonOperator").toString(), comparisonOperator)
-                ).findFirst().orElse(null);
     }
 
 }

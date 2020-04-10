@@ -40,10 +40,14 @@ public class CDPProfileConnection {
         this.pageInfo = pageInfo;
     }
 
+    @GraphQLField
+    @GraphQLName("edges")
     public List<CDPProfileEdge> getEdges() {
         return edges;
     }
 
+    @GraphQLField
+    @GraphQLName("pageInfo")
     public CDPPageInfo getPageInfo() {
         return pageInfo;
     }

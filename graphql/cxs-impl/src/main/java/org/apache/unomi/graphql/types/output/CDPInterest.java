@@ -19,37 +19,31 @@ package org.apache.unomi.graphql.types.output;
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLID;
 import graphql.annotations.annotationTypes.GraphQLName;
+import graphql.annotations.annotationTypes.GraphQLPrettify;
 
 @GraphQLName("CDP_Interest")
 public class CDPInterest {
 
-    @GraphQLID
-    @GraphQLField
     private String topic;
 
-    @GraphQLField
     private Double score;
 
-    public CDPInterest(@GraphQLID final String topic,
-                       final Double score) {
+    public CDPInterest(@GraphQLID final String topic, final Double score) {
         this.topic = topic;
         this.score = score;
     }
 
+    @GraphQLID
+    @GraphQLField
+    @GraphQLPrettify
     public String getTopic() {
         return topic;
     }
 
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
-
+    @GraphQLField
+    @GraphQLPrettify
     public Double getScore() {
         return score;
-    }
-
-    public void setScore(Double score) {
-        this.score = score;
     }
 
 }

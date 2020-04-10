@@ -14,14 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.unomi.graphql.types.extensions;
+package org.apache.unomi.graphql.types.output;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
 import org.apache.unomi.api.segments.Segment;
-import org.apache.unomi.graphql.types.output.CDPView;
 
-import static org.apache.unomi.graphql.types.extensions.UnomiSegment.TYPE_NAME;
+import static org.apache.unomi.graphql.types.output.UnomiSegment.TYPE_NAME;
 
 @GraphQLName(TYPE_NAME)
 public class UnomiSegment {

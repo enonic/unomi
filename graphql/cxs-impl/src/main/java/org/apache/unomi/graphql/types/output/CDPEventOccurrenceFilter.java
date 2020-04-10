@@ -18,19 +18,48 @@ package org.apache.unomi.graphql.types.output;
 
 import graphql.annotations.annotationTypes.GraphQLField;
 import graphql.annotations.annotationTypes.GraphQLName;
+import graphql.annotations.annotationTypes.GraphQLPrettify;
 
 @GraphQLName("CDP_EventOccurrenceFilter")
 public class CDPEventOccurrenceFilter {
-    @GraphQLField
-    public String eventType;
-    @GraphQLField
-    public String beforeTime;
-    @GraphQLField
-    public String afterTime;
-    @GraphQLField
-    public String betweenTime;
-    @GraphQLField
-    public int count;
 
-    public CDPEventFilter eventFilter;
+    public CDPEventOccurrenceFilter() {
+    }
+
+    @GraphQLField
+    @GraphQLPrettify
+    public String getEventType() {
+        return null;
+    }
+
+    @GraphQLField
+    @GraphQLPrettify
+    public String getBeforeTime() {
+        return null;
+    }
+
+    @GraphQLField
+    @GraphQLPrettify
+    public String getAfterTime() {
+        return null;
+    }
+
+    @GraphQLField
+    @GraphQLPrettify
+    public String getBetweenTime() {
+        return null;
+    }
+
+    @GraphQLField
+    @GraphQLPrettify
+    public Integer getCount() {
+        return null;
+    }
+
+    @GraphQLField
+    @GraphQLPrettify
+    public CDPEventFilter getEventFilter() {
+        return null;
+    }
+
 }

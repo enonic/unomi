@@ -85,8 +85,7 @@ public class CDPEvent {
     @GraphQLPrettify
     @GraphQLNonNull
     public CDPObject getObject() {
-        final String uri = String.format("%s:%s", event.getItemType(), event.getItemId());
-        return new CDPObject(uri, event.getItemType(), event.getItemId(), null);
+        return new CDPObject(event);
     }
 
     @GraphQLField

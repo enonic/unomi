@@ -21,10 +21,11 @@ import graphql.annotations.annotationTypes.GraphQLName;
 import graphql.schema.DataFetchingEnvironment;
 import org.apache.unomi.api.Metadata;
 import org.apache.unomi.api.PartialList;
+import org.apache.unomi.api.lists.UserList;
 import org.apache.unomi.graphql.converters.UserListConverter;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.apache.unomi.graphql.types.output.CDPListConnection.TYPE_NAME;
 
@@ -50,10 +51,19 @@ public class CDPListConnection {
             return null;
         }
 
-        return userLists.getList().stream()
-                .map(UserListConverter::convertToUnomiList)
-                .map(CDPListEdge::new)
-                .collect(Collectors.toList());
+        final List<Metadata> userLists = this.userLists.getList();
+
+        final List<CDPListEdge> edges = new ArrayList<>();
+
+        final Integer first = environment.getArgument("first") != null ? environment.getArgument("first") : 0;
+
+        for (int i = 0; i < userLists.size(); i++) {
+            final UserList userList = UserListConverter.convertToUnomiList(userLists.get(i));
+
+            edges.add(new CDPListEdge(userList, first + i));
+        }
+
+        return edges;
     }
 
     @GraphQLField
@@ -62,7 +72,9 @@ public class CDPListConnection {
             return null;
         }
 
-        return new CDPPageInfo(userLists.getOffset() > 0, userLists.getTotalSize() > userLists.getList().size());
+        final Integer first = environment.getArgument("first") != null ? environment.getArgument("first") : 0;
+
+        return new CDPPageInfo(userLists.getOffset() > 0, userLists.getTotalSize() > first + userLists.getList().size());
     }
 
 }

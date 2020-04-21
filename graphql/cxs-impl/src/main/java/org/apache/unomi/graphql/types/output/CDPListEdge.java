@@ -31,8 +31,11 @@ public class CDPListEdge {
 
     private final UserList userList;
 
-    public CDPListEdge(final UserList userList) {
+    private final Integer cursor;
+
+    public CDPListEdge(final UserList userList, Integer cursor) {
         this.userList = userList;
+        this.cursor = cursor;
     }
 
     @GraphQLField
@@ -43,7 +46,7 @@ public class CDPListEdge {
     @GraphQLField
     @GraphQLNonNull
     public String cursor(final DataFetchingEnvironment environment) {
-        return userList != null ? userList.getItemId() : null;
+        return cursor != null ? cursor.toString() : null;
     }
 
 }
